@@ -11,6 +11,7 @@ import static pths.game.xo.GameState.X_WON
 
 class ModelTest extends Specification {
     Controller controller = new Controller()
+    ModelChecker checker = new ModelChecker()
 
     def "controller"() {
         when:
@@ -26,7 +27,7 @@ class ModelTest extends Specification {
 
     void "game start"() {
         given:
-        def model = controller.createNewModel()
+        def model = controller.createNewModel(checker)
 
         expect:
         model.id == 1
@@ -35,7 +36,7 @@ class ModelTest extends Specification {
 
     void "gamex"(GameState state, String[] lines) {
         given:
-        def model = controller.createNewModel()
+        def model = controller.createNewModel(checker)
 
         when:
         for (line in lines) {
@@ -60,7 +61,7 @@ class ModelTest extends Specification {
 
     void "gameo"(GameState state, String[] lines) {
         given:
-        def model = controller.createNewModel()
+        def model = controller.createNewModel(checker)
 
         when:
         for (line in lines) {
@@ -86,7 +87,7 @@ class ModelTest extends Specification {
 
     void "gamed"(GameState state, String[] lines) {
         given:
-        def model = controller.createNewModel()
+        def model = controller.createNewModel(checker)
 
         when:
         for (line in lines) {
@@ -115,7 +116,7 @@ class ModelTest extends Specification {
 
     void "gamei"(GameState state, String[] lines) {
         given:
-        def model = controller.createNewModel()
+        def model = controller.createNewModel(checker)
 
         when:
         for (line in lines) {
