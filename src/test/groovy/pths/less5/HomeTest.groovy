@@ -11,10 +11,12 @@ class HomeTest extends Specification {
         home.fn1(list) == expected
 
         where:
-        list           || expected
-        []             || []
-        [1, 2, 3]      || []
-        [1, -2, 3, -4] || [4, 16]
+        list                  || expected
+        []                    || []
+        [1, 2, 3]             || []
+        List.of(1, 2, 3)      || []
+        [1, -2, 3, -4]        || [4, 16]
+        List.of(1, -2, 3, -4) || [4, 16]
     }
 
     void "fn2 вычислить сумму"(List<Double> list, Double expected) {
@@ -22,14 +24,14 @@ class HomeTest extends Specification {
         Home home = new Home()
 
         expect:
-        home.fn2(list.collect {it.toDouble()}) == expected
+        home.fn2(list.collect { it.toDouble() }) == expected
 
         where:
         [list, expected] << [
                 [[1d, 1e20, -1e20], 0.0],
                 [[1d, 2d, 3d], 6.0],
-                [[1e15] + [1e-4]*10000, 1e15+1],
-                [[-1e15] + [-1e-4]*10000, -1e15-1]
+                [[1e15] + [1e-4] * 10000, 1e15 + 1],
+                [[-1e15] + [-1e-4] * 10000, -1e15 - 1]
         ]
     }
 }
