@@ -1,6 +1,6 @@
 package pths.game.xo.gui;
 
-import pths.game.xo.Mark;
+import pths.game.xo.model.Mark;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

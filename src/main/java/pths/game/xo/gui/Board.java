@@ -1,6 +1,6 @@
 package pths.game.xo.gui;
 
-import pths.game.xo.Model;
+import pths.game.xo.model.Model;
 
 import javax.swing.*;
 import java.awt.*;

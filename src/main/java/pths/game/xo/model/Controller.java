@@ -1,4 +1,4 @@
-package pths.game.xo;
+package pths.game.xo.model;
 
 public class Controller {
     private int size = 0;

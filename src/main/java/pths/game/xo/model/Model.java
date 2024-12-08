@@ -1,4 +1,4 @@
-package pths.game.xo;
+package pths.game.xo.model;
 
 import java.util.ArrayList;
 import java.util.List;

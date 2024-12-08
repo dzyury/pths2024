@@ -1,8 +1,8 @@
 package pths.game.xo.gui;
 
-import pths.game.xo.GameState;
-import pths.game.xo.Model;
-import pths.game.xo.Subscriber;
+import pths.game.xo.model.GameState;
+import pths.game.xo.model.Model;
+import pths.game.xo.model.Subscriber;
 
 import javax.swing.*;
 

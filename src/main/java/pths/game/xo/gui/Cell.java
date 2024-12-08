@@ -1,16 +1,16 @@
 package pths.game.xo.gui;
 
-import pths.game.xo.GameState;
-import pths.game.xo.Mark;
-import pths.game.xo.Model;
-import pths.game.xo.Subscriber;
+import pths.game.xo.model.GameState;
+import pths.game.xo.model.Mark;
+import pths.game.xo.model.Model;
+import pths.game.xo.model.Subscriber;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static pths.game.xo.GameState.X_TURN;
+import static pths.game.xo.model.GameState.X_TURN;
 
 public class Cell extends JPanel implements Subscriber {
     private static final Color BACKGROUND = new Color(160, 160, 160);

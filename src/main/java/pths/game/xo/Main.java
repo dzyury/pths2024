@@ -3,6 +3,8 @@ package pths.game.xo;
 import pths.game.xo.gui.Board;
 import pths.game.xo.gui.Dialog;
 import pths.game.xo.gui.Renderer;
+import pths.game.xo.model.Model;
+import pths.game.xo.model.ModelChecker;
 
 public class Main {
     public static void main(String[] args) {

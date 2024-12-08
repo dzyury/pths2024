@@ -1,13 +1,16 @@
 package pths.game.xo
 
+import pths.game.xo.model.GameState
+import pths.game.xo.model.Mark
+import pths.game.xo.model.ModelChecker
 import spock.lang.Specification
 
-import static pths.game.xo.GameState.DRAW
-import static pths.game.xo.GameState.INVALID
-import static pths.game.xo.GameState.O_TURN
-import static pths.game.xo.GameState.O_WON
-import static pths.game.xo.GameState.X_TURN
-import static pths.game.xo.GameState.X_WON
+import static pths.game.xo.model.GameState.DRAW
+import static pths.game.xo.model.GameState.INVALID
+import static pths.game.xo.model.GameState.O_TURN
+import static pths.game.xo.model.GameState.O_WON
+import static pths.game.xo.model.GameState.X_TURN
+import static pths.game.xo.model.GameState.X_WON
 
 class ModelCheckerTest extends Specification {
     ModelChecker checker = new ModelChecker()
