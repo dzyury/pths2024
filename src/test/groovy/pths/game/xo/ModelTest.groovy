@@ -39,6 +39,7 @@ class ModelTest extends Specification {
 
         then:
         model.id == 2
+        controller.getModel(model.id) === model
     }
 
     void "game start"() {
