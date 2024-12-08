@@ -24,6 +24,23 @@ class ModelTest extends Specification {
         idx << [-1, 0, 1, 2]
     }
 
+    def "controller with two models"() {
+        given:
+        def model
+
+        when:
+        model = controller.createNewModel()
+
+        then:
+        model.id == 1
+
+        when:
+        model = controller.createNewModel()
+
+        then:
+        model.id == 2
+    }
+
     void "game start"() {
         given:
         def model = controller.createNewModel()
