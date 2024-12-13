@@ -1,9 +1,5 @@
-package pths.game.xo
+package pths.game.xo.model
 
-import pths.game.xo.model.Controller
-import pths.game.xo.model.GameState
-import pths.game.xo.model.Mark
-import pths.game.xo.model.ModelChecker
 import spock.lang.Specification
 
 import static pths.game.xo.model.GameState.DRAW
@@ -27,6 +23,25 @@ class ModelTest extends Specification {
 
         where:
         idx << [-1, 0, 1, 2]
+    }
+
+    def "controller with two models"() {
+        given:
+        def model
+
+        when:
+        model = controller.createNewModel()
+
+        then:
+        model.id == 1
+        controller.getModel(model.id) === model
+
+        when:
+        model = controller.createNewModel()
+
+        then:
+        model.id == 2
+        controller.getModel(model.id) === model
     }
 
     void "game start"() {

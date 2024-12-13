@@ -1,8 +1,5 @@
-package pths.game.xo
+package pths.game.xo.model
 
-import pths.game.xo.model.GameState
-import pths.game.xo.model.Mark
-import pths.game.xo.model.ModelChecker
 import spock.lang.Specification
 
 import static pths.game.xo.model.GameState.DRAW
