@@ -1,10 +1,10 @@
-package pths.game.net;
+package pths.game.xo.net;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import pths.game.net.model.Board;
-import pths.game.net.model.Position;
-import pths.game.net.model.User;
+import pths.game.xo.net.model.Board;
+import pths.game.xo.net.model.Position;
+import pths.game.xo.net.model.User;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -16,6 +16,13 @@ import java.util.List;
 
 public class BoardClient {
     private final ObjectMapper mapper = new ObjectMapper();
+    private final String name;
+    private final String passwd;
+
+    public BoardClient(String name, String passwd) {
+        this.name = name;
+        this.passwd = passwd;
+    }
 
     public List<Board> getOpenBoards() throws Exception {
         HttpRequest request = http("http://localhost:8080/board?status=WAITING")
@@ -58,9 +65,7 @@ public class BoardClient {
     }
 
     private HttpRequest.Builder http(String uri) throws URISyntaxException {
-        var user = "kit";
-        var passwd = "cat";
-        var auth = Base64.getEncoder().encodeToString((user + ":" + passwd).getBytes());
+        var auth = Base64.getEncoder().encodeToString((name + ":" + passwd).getBytes());
 
         return HttpRequest.newBuilder()
                 .uri(new URI(uri))
@@ -69,7 +74,7 @@ public class BoardClient {
     }
 
     public static void main(String[] args) throws Exception {
-        var client = new BoardClient();
+        var client = new BoardClient("kit", "cat");
         client.createBoard();
         client.attachUser(1, "kit", Position.X);
         List<Board> openBoards = client.getOpenBoards();

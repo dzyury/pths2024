@@ -1,4 +1,4 @@
-package pths.game.net.model;
+package pths.game.xo.net.model;
 
 public class User {
     private String name;
