@@ -4,6 +4,7 @@ import pths.game.xo.model.GameState;
 import pths.game.xo.model.Mark;
 import pths.game.xo.model.Model;
 import pths.game.xo.model.Subscriber;
+import pths.game.xo.service.GameService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,12 +16,18 @@ import static pths.game.xo.model.GameState.X_TURN;
 public class Cell extends JPanel implements Subscriber {
     private static final Color BACKGROUND = new Color(160, 160, 160);
 
+    private final int x;
+    private final int y;
+    private final Model model;
     private final Renderer renderer;
 
     private Mark mark;
     private boolean isHint;
 
-    public Cell(Renderer renderer) {
+    public Cell(int x, int y, Model model, Renderer renderer) {
+        this.x = x;
+        this.y = y;
+        this.model = model;
         this.renderer = renderer;
     }
 
@@ -28,13 +35,17 @@ public class Cell extends JPanel implements Subscriber {
     public void stateChanged(GameState oldState, GameState newState) {
         if (oldState.isEnd() && newState == X_TURN) {
             mark = null;
-            isHint = false;
-            repaint();
+        } else {
+            mark = model.getMarks()[x][y];
         }
+        isHint = false;
+        repaint();
     }
 
-    public static Cell create(int x, int y, Model model, Renderer renderer) {
-        var cell = new Cell(renderer);
+    public static Cell create(int x, int y, Model model, Renderer renderer, GameService service) {
+        var cell = new Cell(x, y, model, renderer);
+        model.addSubscriber(cell);
+
         cell.setBackground(BACKGROUND);
         cell.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
@@ -43,10 +54,13 @@ public class Cell extends JPanel implements Subscriber {
                 Mark mark = model.whoseTurn(x, y);
                 if (mark == null) return;
 
-                model.turn(x, y, mark);
-                cell.mark = mark;
-                cell.isHint = false;
-                cell.repaint();
+                var marks = model.getMarks();
+                marks[x][y] = mark;
+                service.turn( marks);
+//                model.turn(x, y, mark);
+//                cell.mark = mark;
+//                cell.isHint = false;
+//                cell.repaint();
             }
 
             public void mouseEntered(MouseEvent e) {

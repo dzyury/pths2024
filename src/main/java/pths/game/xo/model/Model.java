@@ -1,21 +1,24 @@
 package pths.game.xo.model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import static pths.game.xo.model.Mark.O;
 import static pths.game.xo.model.Mark.X;
 
 public class Model {
-    public final int id;
     private final ModelChecker checker;
-    private final List<Subscriber> subscribers = new ArrayList<>();
+    private final Set<Subscriber> subscribers = new LinkedHashSet<>();
 
+    private volatile int id;
+    private volatile Position gamer;
+    private volatile boolean ready;
     private Mark[][] marks;
 
-    public Model(int id, ModelChecker checker) {
+    public Model(int id, Position gamer, ModelChecker checker) {
         this.id = id;
+        this.gamer = gamer;
         this.checker = checker;
 
         marks = new Mark[3][3];
@@ -25,7 +28,10 @@ public class Model {
         subscribers.add(subscriber);
     }
 
-    public void init() {
+    public void init(int id, Position gamer) {
+        this.id = id;
+        this.gamer = gamer;
+
         var oldState = checker.check(marks);
         marks = new Mark[3][3];
         notifySubscribers(oldState);
@@ -52,8 +58,8 @@ public class Model {
      *  </ul>
      */
     public void turn(Mark[][] model) {
-        var state = checker.check(marks);
-        switch (state) {
+        var oldState = checker.check(marks);
+        switch (oldState) {
             case X_WON -> throw new IllegalStateException("Чёрные выиграли");
             case X_TURN -> turn(X, model);
             case O_WON -> throw new IllegalStateException("Белые выиграли");
@@ -61,6 +67,7 @@ public class Model {
             case DRAW -> throw new IllegalStateException("Ничья");
             case INVALID -> throw new IllegalStateException("Неожиданная ошибка");
         }
+        notifySubscribers(oldState);
     }
     
     private void turn(Mark mark, Mark[][] model) {
@@ -91,14 +98,18 @@ public class Model {
         notifySubscribers(oldState);
     }
 
-
     public Mark whoseTurn(int x, int y) {
+        if (!ready) return null;
+
         var mark = switch (checker.check(marks)) {
             case GameState.O_TURN -> Mark.O;
             case GameState.X_TURN -> Mark.X;
             default -> null;
         };
-        return marks[x][y] == null ? mark : null;
+        if (marks[x][y] != null) return null;
+        if (mark == X && gamer != Position.X) return null;
+        if (mark == O && gamer != Position.O) return null;
+        return mark;
     }
 
     /**
@@ -106,5 +117,25 @@ public class Model {
      */
     public GameState getState() {
         return checker.check(marks);
+    }
+
+    public Mark[][] getMarks() {
+        var marks = new Mark[3][];
+        for (int i = 0; i < 3; i++) {
+            marks[i] = Arrays.copyOf(this.marks[i], 3);
+        }
+        return marks;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Position getGamer() {
+        return gamer;
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 }

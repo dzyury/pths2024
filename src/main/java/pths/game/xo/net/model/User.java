@@ -1,5 +1,7 @@
 package pths.game.xo.net.model;
 
+import pths.game.xo.model.Position;
+
 public class User {
     private String name;
     private Position position;

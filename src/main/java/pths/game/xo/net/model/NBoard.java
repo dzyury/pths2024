@@ -2,7 +2,7 @@ package pths.game.xo.net.model;
 
 import java.util.List;
 
-public class Board {
+public class NBoard {
     private int id;
     private String status;
     private String details;

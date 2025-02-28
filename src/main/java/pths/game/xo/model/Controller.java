@@ -5,7 +5,7 @@ public class Controller {
     Model[] models = new Model[100_000];
 
     public Model createNewModel(ModelChecker checker) {
-        var model = new Model(size + 1, checker);
+        var model = new Model(size + 1, Position.X, checker);
         models[size++] = model;
         return model;
     }

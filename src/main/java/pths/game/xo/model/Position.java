@@ -1,4 +1,4 @@
-package pths.game.xo.net.model;
+package pths.game.xo.model;
 
 public enum Position {
     X, O
